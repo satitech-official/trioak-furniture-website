@@ -6,7 +6,9 @@ Premium custom furniture and interior solutions for residential, commercial, off
 
 [![Open Live Website](https://img.shields.io/badge/OPEN_LIVE_WEBSITE-1B1B19?style=for-the-badge&logo=github&logoColor=white)](https://satitech-official.github.io/trioak-furniture-website/)
 
-[![Trioak Furniture Website Preview](images/real/living-room.jpg)](https://satitech-official.github.io/trioak-furniture-website/)
+<a href="https://satitech-official.github.io/trioak-furniture-website/">
+  <img src="https://raw.githubusercontent.com/satitech-official/trioak-furniture-website/main/public/images/real/living-room.jpg" alt="Trioak Furniture Website Preview" width="100%" />
+</a>
 
 **Click the preview image or button to open the live website.**
 
