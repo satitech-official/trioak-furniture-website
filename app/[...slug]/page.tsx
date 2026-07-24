@@ -22,6 +22,13 @@ const pages:Record<string,{eyebrow:string;title:string;intro:string}> = {
   terms:{eyebrow:"Legal",title:"Terms of use",intro:"This placeholder terms page must be reviewed and approved before public commercial use."},
 };
 const readableSlug=(value:string)=>value.split("-").map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(" ");
+export function generateStaticParams(){
+  const topLevel=Object.keys(pages).map((key)=>({slug:[key]}));
+  const collectionPages=collections.map((item)=>({slug:["collections",item.slug]}));
+  const projectPages=["contemporary-residence","executive-workspace","bespoke-bedroom-suite"].map((item)=>({slug:["projects",item]}));
+  return [...topLevel,...collectionPages,...projectPages];
+}
+export const dynamicParams=false;
 export async function generateMetadata({params}:{params:Promise<{slug:string[]}>}){const {slug}=await params;return {title:slug[0]==="projects"&&slug[1]?readableSlug(slug[1]):collections.find(x=>x.slug===slug[1])?.title||pages[slug[0]]?.title||"Furniture"}}
 export default async function ContentPage({params}:{params:Promise<{slug:string[]}>}){
   const {slug}=await params,key=slug[0],detail=slug[1];const collection=key==="collections"&&detail?collections.find(x=>x.slug===detail):null;const isProject=key==="projects"&&detail;
