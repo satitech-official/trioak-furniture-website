@@ -1,9 +1,34 @@
-# Trioak Furniture Co. website
+<div align="center">
 
-A responsive, editorial furniture website for Trioak Furniture Co. in Indore.
+# Trioak Furniture Co.
 
-This repository is maintained as a local project. The working copy in this
-folder is the source of truth; no Sites deployment is required.
+Premium custom furniture and interior solutions for residential, commercial, office and modular spaces in Indore.
+
+[![Open Live Website](https://img.shields.io/badge/OPEN_LIVE_WEBSITE-1B1B19?style=for-the-badge&logo=github&logoColor=white)](https://satitech-official.github.io/trioak-furniture-website/)
+
+[![Trioak Furniture Website Preview](images/real/living-room.jpg)](https://satitech-official.github.io/trioak-furniture-website/)
+
+**Click the preview image or button to open the live website.**
+
+</div>
+
+## Live website
+
+https://satitech-official.github.io/trioak-furniture-website/
+
+## Website highlights
+
+- Premium editorial furniture design
+- Responsive multi-page experience
+- Residential, commercial, office, modular and custom furniture collections
+- Project, services, gallery, contact, quote, comparison and search experiences
+- Direct WhatsApp enquiry flow
+- Local, repository-controlled furniture imagery
+- GitHub Pages compatible static deployment
+
+## Image reliability
+
+The website uses local images stored under `public/images/` and `public/media/`. The deployment workflow preserves the existing visual design while applying the GitHub Pages repository path to images, background images, icons and downloadable assets.
 
 ## Local setup
 
@@ -12,14 +37,9 @@ folder is the source of truth; no Sites deployment is required.
 3. Run `npm run dev`.
 4. Validate with `npm run lint` and `npm run build`.
 
-## Replacing placeholder content
+## Content notes
 
-- Logo: add approved files under `public/brand/` and update `components/site-shell.tsx`.
-- Photography: replace the labeled editorial placeholder under `public/media/` with authorized Trioak media.
-- Instagram and YouTube: add verified account configuration through `.env.local`.
-- Google Map: the contact page uses the verified address query; add coordinates only after confirmation.
-- Testimonials and projects: add only verified content to typed files under `data/`.
-- Catalogue: place the approved PDF under `public/documents/` and link it from the catalogue page.
-- Email delivery: configure `FORM_DELIVERY_WEBHOOK` and a secure server route before enabling direct submissions.
-
-The current enquiry form validates input and continues through the official Trioak WhatsApp number.
+- Replace photographs only with approved Trioak media while keeping the current file paths or updating their references carefully.
+- Instagram, WhatsApp and business details are configured in `data/brand.ts`.
+- The enquiry form validates user input and continues through the official Trioak WhatsApp number.
+- GitHub Pages deployment runs automatically from `.github/workflows/deploy-pages.yml`.
