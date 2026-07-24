@@ -6,36 +6,49 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const fallbackImage = "/images/real/interior-detail.jpg";
 
 function prefixPath(value: string) {
-  if (!basePath || !value.startsWith("/") || value.startsWith("//") || value.startsWith(`${basePath}/`)) return value;
+  if (
+    !basePath ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    value === basePath ||
+    value.startsWith(`${basePath}/`)
+  ) {
+    return value;
+  }
   return `${basePath}${value}`;
+}
+
+function updateAttribute(element: Element, attribute: string, nextValue: string) {
+  const currentValue = element.getAttribute(attribute);
+  if (currentValue !== nextValue) element.setAttribute(attribute, nextValue);
 }
 
 function fixElement(element: Element) {
   for (const attribute of ["href", "src", "poster", "action"]) {
     const value = element.getAttribute(attribute);
-    if (value) element.setAttribute(attribute, prefixPath(value));
+    if (!value) continue;
+    updateAttribute(element, attribute, prefixPath(value));
   }
 
   const srcset = element.getAttribute("srcset");
   if (srcset) {
-    element.setAttribute(
-      "srcset",
-      srcset
-        .split(",")
-        .map((entry) => {
-          const [url, descriptor] = entry.trim().split(/\s+/, 2);
-          return `${prefixPath(url)}${descriptor ? ` ${descriptor}` : ""}`;
-        })
-        .join(", ")
-    );
+    const nextSrcset = srcset
+      .split(",")
+      .map((entry) => {
+        const [url, descriptor] = entry.trim().split(/\s+/, 2);
+        return `${prefixPath(url)}${descriptor ? ` ${descriptor}` : ""}`;
+      })
+      .join(", ");
+    updateAttribute(element, "srcset", nextSrcset);
   }
 
   const style = element.getAttribute("style");
   if (style?.includes("url(/")) {
-    element.setAttribute(
-      "style",
-      style.replace(/url\((['"]?)\/(?!\/|trioak-furniture-website\/)/g, `url($1${basePath}/`)
+    const nextStyle = style.replace(
+      /url\((['"]?)\/(?!\/|trioak-furniture-website\/)/g,
+      `url($1${basePath}/`
     );
+    updateAttribute(element, "style", nextStyle);
   }
 }
 
@@ -51,12 +64,14 @@ export function BasePathGuard() {
     apply(document);
 
     const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "attributes" && mutation.target instanceof Element) fixElement(mutation.target);
+      for (const mutation of mutations) {
+        if (mutation.type === "attributes" && mutation.target instanceof Element) {
+          fixElement(mutation.target);
+        }
         mutation.addedNodes.forEach((node) => {
           if (node instanceof Element) apply(node);
         });
-      });
+      }
     });
 
     observer.observe(document.documentElement, {
@@ -70,8 +85,8 @@ export function BasePathGuard() {
       const image = event.target;
       if (!(image instanceof HTMLImageElement) || image.dataset.fallbackApplied) return;
       image.dataset.fallbackApplied = "true";
-      image.src = prefixPath(fallbackImage);
       image.srcset = "";
+      image.src = prefixPath(fallbackImage);
     };
 
     document.addEventListener("error", onError, true);
