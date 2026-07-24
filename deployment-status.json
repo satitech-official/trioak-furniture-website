@@ -1,9 +1,9 @@
 {
-  "status": "failure",
+  "status": "success",
   "build": "success",
-  "deploy": "failure",
+  "deploy": "success",
   "pageUrl": "https://satitech-official.github.io/trioak-furniture-website/",
   "commit": "6b4b77a23a551d0275a278b43fc438bd0a7f05e8",
   "runId": 30085963867,
-  "verifiedAt": "2026-07-24T10:24:36.295Z"
+  "verifiedAt": "2026-07-24T10:27:52.994Z"
 }
